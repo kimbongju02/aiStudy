@@ -1,3 +1,38 @@
+'''
+
+입력층, 은닉층, 출력층으로 구성
+입력층의 노드는 4개,
+은닉층은 1개의 층
+은닉층의 노드는 4개
+출력층의 노드는 4개
+입력층은 xor, or, and, nand이 출력하는 4가지 경우의 수
+은닉층은 입력 4개에 대한 결과 4개
+출력층은 입력 4개에 대한 결과 4개
+활성화함수는 sigmoid함수 사용
+결정화함수는 sigmoid함수 사용
+
+--hyper Parameter--
+epochs = 1000
+lr = 0.1
+
+--학습 기반--
+없음
+
+--사용라이브러리--
+numpy
+matplotlib
+
+--파이썬버전--
+3.11.4
+
+--스펙--
+cpu - 11th Gen Intel(R) Core(TM) i5-11300H
+ram -24.0GB
+system - 64비트 운영 체제, x64 기반 프로세서
+graphic card - NVIDIAGeForce RTX 3050 Laptop GPU
+
+'''
+
 import numpy as np
 import matplotlib.pyplot as plt
 #plt.style.use('seaborn-whitegrid')
