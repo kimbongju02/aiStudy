@@ -72,7 +72,7 @@ train_size = X_train.shape[0]
 def softmax(x):
     if x.ndim == 2:
         x = x.T
-        x = x - np.max(x, axis=0)
+        x = x - np.max(x, axis=0) # 행에서의 최대값
         y = np.exp(x) / np.sum(np.exp(x), axis=0)
         return y.T
     
@@ -84,8 +84,8 @@ def mean_squared_error(pred_y, true_y):
 
 def cross_entropy_error(pred_y , true_y):
     if pred_y.ndim == 1:
-        true_y = true_y.reshape(1, true_y.size)
-        pred_y = pred_y.reshape(1, pred_y.size)
+        true_y = true_y.reshape(1, true_y.size) # 1행 true_y.size열 배열
+        pred_y = pred_y.reshape(1, pred_y.size) # 1행 pred_y.size열 배열
         
     if true_y.size == pred_y.size: # one-hot encoding
         true_y = true_y.argmax(axis=1)
@@ -98,7 +98,6 @@ def softmax_loss(X, true_y):
     # softmax를 계산하고 cross_entropy_error하여 나온 loss 반환
     pred_y = softmax(X)
     return cross_entropy_error(pred_y, true_y)
-
 
 # Sigmoid 함수 https://www.notion.so/6bc622c526274d089e712025a87f49bf?pvs=4
 class Sigmoid():
@@ -138,13 +137,13 @@ class Layer():
         self.x = None
         self.origin_x_shape = None
         
-        self.dL_dW = None
-        self.dL_db = None
+        self.dL_dW = None # 가중치의 미분값에 손실값의 미분값을 나눈 것
+        self.dL_db = None # 편향의 미분값에 손실값의 미분값을 나눈 것
         
     def forward(self, x):
         self.origin_x_shape = x.shape
         
-        x = x.reshape(x.shape[0], -1)
+        x = x.reshape(x.shape[0], -1) # 행의 길이가 x.shape[0]인 배열
         self.x = x
         out = np.dot(self.x, self.W) + self.b
         
@@ -154,7 +153,7 @@ class Layer():
         dx = np.dot(dout, self.W.T)
         self.dL_dW = np.dot(self.x.T, dout)
         self.dL_db = np.sum(dout, axis=0)
-        dx = dx.reshape(*self.origin_x_shape)
+        dx = dx.reshape(*self.origin_x_shape) # origin_x_shape에 들어있는 값으로
         return dx
     
 # Softmax
