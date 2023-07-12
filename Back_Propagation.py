@@ -41,7 +41,7 @@ graphic card - NVIDIAGeForce RTX 3050 Laptop GPU
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
-from collections import OrderedDict
+from collections import OrderedDict # 데이터의 순서 보장위해 사용
 
 # data load
 np.random.seed(42)
@@ -153,7 +153,7 @@ class Layer():
         dx = np.dot(dout, self.W.T)
         self.dL_dW = np.dot(self.x.T, dout)
         self.dL_db = np.sum(dout, axis=0)
-        dx = dx.reshape(*self.origin_x_shape) # origin_x_shape에 들어있는 값으로
+        dx = dx.reshape(*self.origin_x_shape) # * - 언패킹 연산자
         return dx
     
 # Softmax
@@ -195,27 +195,29 @@ class MyModel():
         
         activation_layer = {'sigmoid': Sigmoid, 'relu': ReLU}
         self.layers = OrderedDict()
+            # 은닉층의 층 수만큼 반복
         for idx in range(1, self.hidden_layer_num + 1):
             self.layers['Layer' + str(idx)] = Layer(self.params['W' + str(idx)], self.params['b' + str(idx)])
-            # activation_layer에서 현재 activation 값을 받아온 후 해당하는 딕셔너리 값을 Activation_function 넣는다
+                # activation_layer에서 현재 activation 값을 받아온 후 해당하는 딕셔너리 값을 Activation_function 넣는다
             self.layers['Activation_function' + str(idx)] = activation_layer[activation]()
             
+            # 결정화 함수에서 사용하기 위한 부분
         idx = self.hidden_layer_num + 1
-        self.layers['Layer' + str(idx)]= Layer(self.params['W' + str(idx)], self.params['b' + str(idx)])
+        self.layers['Layer' + str(idx)] = Layer(self.params['W' + str(idx)], self.params['b' + str(idx)])
         
-        self.last_layer = Softmax()
+        self.last_layer = Softmax() # 결정화 함수
         
     def __init_weights(self, activation):
         weight_std = None
-        all_size_list = [self.input_size] + self.hidden_size_list + [self.output_size]
+        all_size_list = [self.input_size] + self.hidden_size_list + [self.output_size] 
         for idx in range(1, len(all_size_list)):
             if activation.lower() == 'relu':
                 weight_std = np.sqrt(2.0 / self.input_size) # He 초기화
             elif activation.lower() == 'sigmoid':
                 weight_std = np.sqrt(1.0 / self.input_size) # Xavier 초기화
                 
-            self.params['W' + str(idx)] = weight_std * np.random.randn(all_size_list[idx-1], all_size_list[idx])
-            self.params['b' + str(idx)] = np.random.randn(all_size_list[idx])
+            self.params['W' + str(idx)] = weight_std * np.random.randn(all_size_list[idx-1], all_size_list[idx]) # 각 Layer에 맞는 가중치
+            self.params['b' + str(idx)] = np.random.randn(all_size_list[idx]) # 각 Layer에 맞는 편향
             
     def predict(self, x):
         for layer in self.layers.values():
