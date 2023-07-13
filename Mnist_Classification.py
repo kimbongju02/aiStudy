@@ -76,7 +76,7 @@ x_train, x_test = x_train.reshape(-1, 28*28).astype(np.float32), x_test.reshape(
 x_train = x_train /.255
 x_test = x_test /.255
 
-y_train = np.eye(num_classes)[y_train] # one-hot encoding
+y_train = np.eye(num_classes)[y_train] # one-hot encoding 형태
 
 '''
 print(x_train.shape)  # (10000, 784)
@@ -132,7 +132,7 @@ class ReLU:
         self.mask = None
     
     def forward(self, input_data):
-        self.mask = (input_data <= 0)
+        self.mask = (input_data <= 0) # input_data 중 0보다 작은 값의 인덱스 번호
         out = input_data.copy()
         out[self.mask] = 0
         
@@ -173,7 +173,7 @@ class Layer:
     def forward(self, input_data):
         self.input_data_shape = input_data.shape
         
-        input_data = input_data.reshape(input_data.shape[0], -1)
+        input_data = input_data.reshape(input_data.shape[0], -1) # 
         self.input_data = input_data
         out = np.dot(self.input_data, self.W) + self.b
         
