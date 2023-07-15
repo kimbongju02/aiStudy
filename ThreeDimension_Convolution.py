@@ -11,6 +11,7 @@ from io import BytesIO
 # Util Function
 def url_to_image(url, gray=False):
     resp = urllib.request.urlopen(url) # 이미지 주소 받아오기
+    
         # 이미지 주소를 부호 없는 8비트 정수형인 바이트 배열로 변환하고 numpy 배열로 변환한다.
     image = np.asarray(bytearray(resp.read()), dtype="uint8")
     
@@ -30,6 +31,7 @@ def conv_op(image, kernel, pad=0, stride=1):
     out_w = (W + 2*pad - kernel_size) // stride + 1
     
     filtered_img = np.zeros((out_h, out_w))
+    
         #  [(pad, pad), [pad, pad], (0, 0)]은 각 차원별로 적용할 패딩의 크기를 지정 
         #  여기서 pad는 각 차원의 양쪽에 추가할 패딩의 크기
         #  'constant'는 패딩을 적용할 때 사용할 값의 종류를 지정
