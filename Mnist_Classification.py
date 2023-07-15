@@ -331,6 +331,7 @@ class MyModel:
             if self.use_batchnorm:
                 self.params['gamma' + str(idx)] = np.ones(hidden_size_list[idx-1])
                 self.params['beta' + str(idx)] = np.zeros(hidden_size_list[idx-1])
+                    # BatchNormalization에 gamma, beta 전달
                 self.layers['BatchNorm' + str(idx)] = BatchNormalization(self.params['gamma' + str(idx)], self.params['beta' + str(idx)])
             
             self.layers['Activation-function' + str(idx)] = activation_layer[activation]()
