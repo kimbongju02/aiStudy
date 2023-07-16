@@ -177,7 +177,7 @@ class Polling2D:
         dmax[np.arange(self.arg_max.size), self.arg_max.flarren()] = dout.flatten()
         dmax = dmax.reshape(dout.shape + (pool_size,))
         
-        dcol = dmax.reshape(dmax.shape[0] * dmax.shape[0] * dmax.shape[2], -1)
+        dcol = dmax.reshape(dmax.shape[0] * dmax.shape[1] * dmax.shape[2], -1)
         dx = col2im(dcol, self.input_data, self.kernel_size, self.kernel_size, self.stride, self.pad)
         
         return dx
