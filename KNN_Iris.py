@@ -29,8 +29,8 @@ print("평가 데이터 점수: {}".format(model.score(X_test, y_test)))
 model = KNeighborsClassifier()
 model.fit(X_train_scale, y_train)
 
-print("스케일링 후 학습 데이터 점수: {}".format(model.score(X_train, y_train)))
-print("스케일링 후 평가 데이터 점수: {}".format(model.score(X_test, y_test)))
+print("스케일링 후 학습 데이터 점수: {}".format(model.score(X_train_scale, y_train)))
+print("스케일링 후 평가 데이터 점수: {}".format(model.score(X_test_scale, y_test)))
 
 cross_validate(
     estimator=KNeighborsClassifier(),
