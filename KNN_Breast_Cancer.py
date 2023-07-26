@@ -14,11 +14,24 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline, Pipeline
 
 cancer = load_breast_cancer()
+
+cancer_df = pd.DataFrame(data=cancer.data, columns=cancer.feature_names)
+cancer_df['Target'] = cancer.target
+print("cancer_df: \n{}".format(cancer_df))
+
 X, y = cancer.data, cancer.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 cancer_train_df = pd.DataFrame(data=X_train, columns=cancer.feature_names)
 cancer_train_df['target'] = y_train
+
+cancer_train_df = pd.DataFrame(data=X_train, columns=cancer.feature_names)
+cancer_train_df['Target'] = y_train
+print("cancer_train_df: \n{}".format(cancer_train_df))
+
+cancer_test_df = pd.DataFrame(data=X_test, columns=cancer.feature_names)
+cancer_test_df['Target'] = y_test
+print("cancer_test_df: \n{}".format(cancer_test_df))
 
 
 model = KNeighborsClassifier()
