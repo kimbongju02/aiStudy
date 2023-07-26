@@ -13,8 +13,22 @@ from sklearn.model_selection import train_test_split, cross_validate, GridSearch
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline, Pipeline
 
-X, y = load_iris(return_X_y=True)
+iris = load_iris()
+
+iris_df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+iris_df['Target'] = iris.target
+print("iris_df: \n{}".format(iris_df))
+
+X, y = iris.data, iris.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+iris_train_df = pd.DataFrame(data=X_train, columns=iris.feature_names)
+iris_train_df['Target'] = y_train
+print("iris_train_df: \n{}".format(iris_train_df))
+
+iris_test_df = pd.DataFrame(data=X_test, columns=iris.feature_names)
+iris_test_df['Target'] = y_test
+print("iris_test_df: \n{}".format(iris_test_df))
 
 scaler = StandardScaler()
 X_train_scale = scaler.fit_transform(X_train)
