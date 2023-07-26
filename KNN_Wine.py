@@ -14,11 +14,21 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline, Pipeline
 
 wine = load_wine()
+
+wine_df = pd.DataFrame(data=wine.data, columns=wine.feature_names)
+wine_df['Target'] = wine.target
+print("wine_df: \n{}".format(wine_df))
+
 X, y = wine.data, wine.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 wine_train_df = pd.DataFrame(data=X_train, columns=wine.feature_names)
-wine_train_df['target'] = y_train
+wine_train_df['Target'] = y_train
+print("wine_train_df: \n{}".format(wine_train_df))
+
+wine_test_df = pd.DataFrame(data=X_test, columns=wine.feature_names)
+wine_test_df['Target'] = y_test
+print("wine_test_df: \n{}".format(wine_test_df))
 
 
 model = KNeighborsClassifier()
