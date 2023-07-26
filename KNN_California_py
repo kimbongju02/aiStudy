@@ -94,13 +94,6 @@ def make_meshgrid(x, y, h=.02):
                          np.arange(y_min, y_max, h))
     return xx, yy
 
-def plot_contours(clf, xx, yy, **params):
-    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = Z.reshape(xx.shape)
-    out = plt.contour(xx, yy, Z, **params)
-    
-    return out
-
 model = KNeighborsRegressor()
 model.fit(X_comp, y)
 predict = model.predict(X_comp)
