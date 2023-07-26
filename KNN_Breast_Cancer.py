@@ -34,8 +34,8 @@ X_test_scale = scaler.transform(X_test)
 model = KNeighborsClassifier()
 model.fit(X_train_scale, y_train)
 
-print("스케일링 후 학습 데이터 점수: {}".format(model.score(X_train, y_train)))
-print("스케일링 후 평가 데이터 점수: {}".format(model.score(X_test, y_test)))
+print("스케일링 후 학습 데이터 점수: {}".format(model.score(X_train_scale, y_train)))
+print("스케일링 후 평가 데이터 점수: {}".format(model.score(X_test_scale, y_test)))
 
 estimator = make_pipeline(
     StandardScaler(),
@@ -72,8 +72,8 @@ print('GridSearchCV best score: {}'.format(gs.best_score_))
 tsne = TSNE(n_components=2)
 X_comp = tsne.fit_transform(X)
 
-breast_cancer_comp_df = pd.DataFrame(data=X_comp)
-breast_cancer_comp_df['target'] = y
+cancer_comp_df = pd.DataFrame(data=X_comp)
+cancer_comp_df['target'] = y
 
 plt.scatter(X_comp[:, 0], X_comp[:, 1], c=y, 
             cmap=plt.cm.coolwarm, s=20, edgecolors='k')
